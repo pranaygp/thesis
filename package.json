@@ -1,0 +1,14 @@
+{
+  "name": "thesis",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Pranay Prakash <pranay.gp@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "benchmark": "^2.1.4",
+    "microtime": "^2.1.6"
+  }
+}
