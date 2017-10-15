@@ -23,7 +23,7 @@ wadler_map_reduce.js after x 95,385 ops/sec ±0.84% (92 runs sampled)
 Fastest is wadler_map_reduce.js before,wadler_map_reduce.js after
 ```
 
-# How to detect if a function is pure (or _referentially transparent_)
+# How to detect if a function is pure (or _referentially transparent_)[1]
 
 1. It only reads parameters and locals;*
 2. It only writes locals;
@@ -39,9 +39,11 @@ We also need to store information on the purity of some functions (for instance,
 
 # Potential issues
 
-In a non-lazy language, it is possible to convert a function that doens't terminate into one that does using Wadler's deforestation algorithm [1]
+* In a non-lazy language, it is possible to convert a function that doens't terminate into one that does using Wadler's deforestation algorithm [2]
 
 
 
 # References
-[1] [http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps](http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps)
+[1] [https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure](https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure)]
+
+[2] [http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps](http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps)
