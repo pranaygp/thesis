@@ -6,5 +6,6 @@ module.exports = function(n) {
   
   upto_n
     .typedMap(n => n*n, 'a', 'a')               // [a] -> [a]   ( a -> a )
-    .typedMap(n => n+'', 'a', 'b')          // [a] -> [b]   ( a -> b )
+    .typedMap(n => ({val: n}), 'a', 'b')        // [a] -> [b]   ( a -> b )
+    .typedMap(o => o.val+1, 'b', 'a')           // [b] -> [a]   ( b -> a )
 }

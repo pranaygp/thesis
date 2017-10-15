@@ -7,6 +7,9 @@ const plugin = require('../');
 const simpleMapMapInput = require('./strippedInputs/simple_map_map');
 const simpleMapMapOutput = require('./outputs/simple_map_map');
 
+const simpleMapMapMapInput = require('./strippedInputs/simple_map_map_map');
+const simpleMapMapMapOutput = require('./outputs/simple_map_map_map');
+
 const INPUTS_DIR = path.resolve(__dirname, 'inputs');
 
 it('Compilations match snapshots', () => {
@@ -20,6 +23,11 @@ it('Compilations match snapshots', () => {
 it('has the same behaviour on simple_map_map', () => {
   expect(simpleMapMapInput(10)).toEqual(simpleMapMapOutput(10));
   expect(simpleMapMapInput(100)).toEqual(simpleMapMapOutput(100));
+})
+
+it('has the same behaviour on simple_map_map_map', () => {
+  expect(simpleMapMapMapInput(10)).toEqual(simpleMapMapMapOutput(10));
+  expect(simpleMapMapMapInput(100)).toEqual(simpleMapMapMapOutput(100));
 })
 
 function fetchFiles(dir) {
