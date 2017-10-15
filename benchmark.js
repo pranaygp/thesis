@@ -1,84 +1,35 @@
 const Benchmark = require('benchmark');
+const chalk = require('chalk');
+const fs = require('fs');
+const path = require('path');
 
-const simpleMapMapInput = require('./__tests__/strippedInputs/simple_map_map');
-const simpleMapMapOutput = require('./__tests__/outputs/simple_map_map');
+const INPUTS_DIR = path.resolve(__dirname, '__tests__/inputs');
+const STRIPPED_INPUTS_DIR = path.resolve(__dirname, '__tests__/strippedInputs');
+const OUTPUTS_DIR = path.resolve(__dirname, '__tests__/outputs');
 
-const simpleMapMapMapInput = require('./__tests__/strippedInputs/simple_map_map_map');
-const simpleMapMapMapOutput = require('./__tests__/outputs/simple_map_map_map');
+const strippedInputFiles = fs.readdirSync(STRIPPED_INPUTS_DIR);
+strippedInputFiles.forEach(fName => {
+  const inputFName = path.resolve(STRIPPED_INPUTS_DIR, fName);
+  const outputFName = path.resolve(OUTPUTS_DIR, fName);
+  const input = require(inputFName);
+  const output = require(outputFName);
 
-const smallSuite = new Benchmark.Suite;
-smallSuite
-  .add('simple_map_map before',  function() {
-    simpleMapMapInput(10);
-  })
-  .add('simple_map_map after transform',  function() {
-    simpleMapMapOutput(10);
-  })
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log('\nStarting medium test suite (n = 200)');
-    startMedSuite();
-  })
+  const suite = new Benchmark.Suite;
+  suite
+    .add(fName + ' before', () => {
+      input(200);
+    })
+    .add(fName + ' after', () => {
+      output(200);
+    })
+    .on('cycle', function(event) {
+      console.log(String(event.target));
+    })
+    .on('complete', function() {
+      console.log('Fastest is ' + chalk.green(this.filter('fastest').map('name')));
+    })
 
-function startSmallSuite(){ smallSuite.run({ 'async': true }); }
-
-const medSuite = new Benchmark.Suite;
-medSuite
-  .add('simple_map_map before',  function() {
-    simpleMapMapInput(200);
-  })
-  .add('simple_map_map after transform',  function() {
-    simpleMapMapOutput(200);
-  })
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log('\nStarting large test suite (n = 1000)');
-    startLargeSuite();
-  })
-
-function startMedSuite(){ medSuite.run({ 'async': true }); }
-
-const largeSuite = new Benchmark.Suite;
-largeSuite
-  .add('simple_map_map before',  function() {
-    simpleMapMapInput(1000);
-  })
-  .add('simple_map_map after transform',  function() {
-    simpleMapMapOutput(1000);
-  })
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-    console.log('\nStarting map_map_map test suite (n = 200)');
-    startMapMapMapSuite();
-  })
-
-function startLargeSuite(){ largeSuite.run({ 'async': true }); }
-
-const mapMapMapSuite = new Benchmark.Suite;
-mapMapMapSuite
-  .add('simple_map_map_map before',  function() {
-    simpleMapMapMapInput(200);
-  })
-  .add('simple_map_map_map after transform',  function() {
-    simpleMapMapMapOutput(200);
-  })
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-  })
-
-function startMapMapMapSuite(){ mapMapMapSuite.run({ 'async': true }); }
-
-console.log('Starting small test suite (n = 10)');
-startSmallSuite();
+  console.log('\nStarting benchmark test for ' + fName)
+    
+  suite.run()
+})

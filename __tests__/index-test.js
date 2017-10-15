@@ -3,14 +3,9 @@ const fs = require('fs');
 const path = require('path');
 const plugin = require('../');
 
-// TODO: can we automate these from the paths (alternatively, use an index.js file)
-const simpleMapMapInput = require('./strippedInputs/simple_map_map');
-const simpleMapMapOutput = require('./outputs/simple_map_map');
-
-const simpleMapMapMapInput = require('./strippedInputs/simple_map_map_map');
-const simpleMapMapMapOutput = require('./outputs/simple_map_map_map');
-
 const INPUTS_DIR = path.resolve(__dirname, 'inputs');
+const STRIPPED_INPUTS_DIR = path.resolve(__dirname, 'strippedInputs');
+const OUTPUTS_DIR = path.resolve(__dirname, 'outputs');
 
 it('Compilations match snapshots', () => {
   let inputs = fetchFiles(INPUTS_DIR);
@@ -20,14 +15,16 @@ it('Compilations match snapshots', () => {
   })
 })
 
-it('has the same behaviour on simple_map_map', () => {
-  expect(simpleMapMapInput(10)).toEqual(simpleMapMapOutput(10));
-  expect(simpleMapMapInput(100)).toEqual(simpleMapMapOutput(100));
-})
+const strippedInputFiles = fs.readdirSync(STRIPPED_INPUTS_DIR);
+strippedInputFiles.forEach(fName => {
+  const inputFName = path.resolve(STRIPPED_INPUTS_DIR, fName);
+  const outputFName = path.resolve(OUTPUTS_DIR, fName);
+  const input = require(inputFName);
+  const output = require(outputFName);
 
-it('has the same behaviour on simple_map_map_map', () => {
-  expect(simpleMapMapMapInput(10)).toEqual(simpleMapMapMapOutput(10));
-  expect(simpleMapMapMapInput(100)).toEqual(simpleMapMapMapOutput(100));
+  it(fName + ' is functionally equivalent before and after compilation', () => {
+    expect(input(200)).toEqual(output(200));
+  })
 })
 
 function fetchFiles(dir) {

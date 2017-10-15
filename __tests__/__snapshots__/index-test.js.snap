@@ -1,23 +1,31 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Compilations match snapshots 1`] = `
-"// example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
-
-module.exports = function (n) {
+"module.exports = function (n) {
   let upto_n = [];
   for (let i = 0; i < n; i++) upto_n.push(i + 1);
 
-  upto_n.map(_ => (n => n + '')((n => n * n)(_))); // [a] -> [b]   ( a -> b )
+  return upto_n.map(_ => (n => n + '')((n => n * n)(_))); // [a] -> [b]   ( a -> b )
 };"
 `;
 
 exports[`Compilations match snapshots 2`] = `
+"module.exports = function (n) {
+  let upto_n = [];
+  for (let i = 0; i < n; i++) upto_n.push(i + 1);
+
+  return upto_n.map(_ => (_ => (o => o.val + 1)((n => ({ val: n }))(_)))((n => n * n)(_))); // [b] -> [a]   ( b -> a )
+};"
+`;
+
+exports[`Compilations match snapshots 3`] = `
 "// example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
 
 module.exports = function (n) {
   let upto_n = [];
   for (let i = 0; i < n; i++) upto_n.push(i + 1);
 
-  upto_n.map(_ => (_ => (o => o.val + 1)((n => ({ val: n }))(_)))((n => n * n)(_))); // [b] -> [a]   ( b -> a )
+  return upto_n.map(n => n * n) // [a] -> [a]   ( a -> a )
+  .reduce((p, c) => p + c, 'a'); // [a] -> a     ( a -> a -> a, a )
 };"
 `;
