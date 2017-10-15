@@ -6,9 +6,11 @@ module.exports = function (babel) {
     visitor: {
       CallExpression(path) {
         let {node} = path;
+        // xs.SOMETHING().typedMap()...
         if (node.callee.type === "MemberExpression" && node.callee.property.type === "Identifier" && node.callee.property.name === 'typedMap') {
           if(node.callee.object.type === 'CallExpression') {
             const upOneChain = node.callee.object;
+            // xs.typedMap().typedMap()...
             if (upOneChain.callee.type === "MemberExpression" && upOneChain.callee.property.type === "Identifier" && upOneChain.callee.property.name === 'typedMap') {
 
               const f = upOneChain.arguments[0];
@@ -17,7 +19,7 @@ module.exports = function (babel) {
               const a = upOneChain.arguments[1];
               const b = node.arguments[2];
 
-              const fg = t.arrowFunctionExpression(
+              const gf = t.arrowFunctionExpression(
                 [ t.identifier('_') ],
                 t.callExpression(
                   g,
@@ -33,7 +35,7 @@ module.exports = function (babel) {
                   upOneChain.callee.object,
                   t.identifier('typedMap')
                 ),
-                [fg, a, b]
+                [gf, a, b]
               ) 
 
               path.replaceWith(replacementTypedMap);
@@ -41,6 +43,48 @@ module.exports = function (babel) {
             }
           }
         }
+
+        // xs.SOMETHING().typedReduce()...
+        if (node.callee.type === "MemberExpression" && node.callee.property.type === "Identifier" && node.callee.property.name === 'typedReduce') {
+          if(node.callee.object.type === 'CallExpression') {
+            const upOneChain = node.callee.object;
+            // xs.typedMap().typedReduce()...
+            if (upOneChain.callee.type === "MemberExpression" && upOneChain.callee.property.type === "Identifier" && upOneChain.callee.property.name === 'typedMap') {
+
+              const f = upOneChain.arguments[0];
+              const g = node.arguments[0];
+              const initVal = node.arguments[1]
+
+              const a = upOneChain.arguments[1];
+              const b = node.arguments[3];
+
+              const gf = t.arrowFunctionExpression(
+                [t.identifier('$'), t.identifier('_')],
+                t.callExpression(
+                  g,
+                  [
+                    t.identifier('$'),
+                    t.callExpression(
+                      f,
+                      [t.identifier('_')]
+                    )
+                  ]
+                )
+              )
+
+              const replacementTypedReduce = t.callExpression(
+                t.memberExpression(
+                  upOneChain.callee.object,
+                  t.identifier('typedReduce')
+                ),
+                [gf, initVal, a, b]
+              )
+
+              path.replaceWith(replacementTypedReduce);
+            }
+          }
+        }
+
       },
       Program: {
         exit(path) {

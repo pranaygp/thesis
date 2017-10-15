@@ -2,7 +2,7 @@
 
 - [x] "map/map"    -> forall f g xs. xs.map(f).map(g) = xs.map(_ => g(f(_)))
 
-- [ ] "map/reduce" -> forall f g a xs. xs.map(f).reduce(g, a) = ...
+- [x] "map/reduce" -> forall f g a xs. xs.map(f).reduce(g, a) = xs.reduce(($, \_) => g($, f(_)), a)
 
 # Benchmark tests
 
