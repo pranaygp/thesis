@@ -1,7 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Compilations match snapshots 1`] = `
-"// example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
+// example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
 
 module.exports = function (n) {
   let upto_n = [];
@@ -9,5 +6,4 @@ module.exports = function (n) {
 
   upto_n.map(_ => (n => n + '')((n => n * n)(_))) // [a] -> [b]
   .reduce((p, c) => p + c, 0); // [a], a -> a
-};"
-`;
+};

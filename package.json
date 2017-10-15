@@ -6,15 +6,28 @@
   "license": "MIT",
   "scripts": {
     "benchmark": "node benchmark.js",
-    "test": "jest"
+    "build-tests": "babel __tests__/inputs -d __tests__/outputs && babel __tests__/inputs -d __tests__/strippedInputs --plugins ../../stripTypesPlugin",
+    "test": "npm run build-tests && jest"
   },
   "dependencies": {
     "benchmark": "^2.1.4",
     "microtime": "^2.1.6"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
     "babel-types": "^6.26.0",
     "jest": "^21.2.1"
+  },
+  "jest": {
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/inputs/",
+      "/strippedInputs/",
+      "/outputs/"
+    ]
+  },
+  "babel": {
+    "plugins": ["./"]
   }
 }
