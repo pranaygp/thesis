@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`works 1`] = `
+"
+const n = 1000;
+let upto_n = [];
+for (let i = 0; i < n; i++) upto_n.push(i + 1);
+
+upto_n.typedMap(_ => (n => n + '')((n => n * n)(_)), 'a', 'b') // [a] -> [b]
+.typedReduce((p, c) => p + c, 0, 'a', 'a'); // [a], a -> a"
+`;

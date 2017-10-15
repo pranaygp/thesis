@@ -1,37 +1,56 @@
-const Benchmark = require('benchmark');
+const t = require("babel-types");
 
-let suite = new Benchmark.Suite;
+module.exports = function (babel) {
+  return {
+    visitor: {
+      CallExpression(path) {
+        let {node} = path;
+        if (node.callee.type === "MemberExpression" && node.callee.property.type === "Identifier" && node.callee.property.name === 'typedMap') {
+          console.log('found a call to typedMap');
+          if(node.callee.object.type === 'CallExpression') {
+            const upOneChain = node.callee.object;
+            if (upOneChain.callee.type === "MemberExpression" && upOneChain.callee.property.type === "Identifier" && upOneChain.callee.property.name === 'typedMap') {
 
-const n = 1000;
+              console.log('this typedMap is the result of a chained typedMap');
+              // console.log('arguments: ', upOneChain.arguments);
 
-suite
-  .add('sum (map square (upto 1 n))',  function() {
-    let upto_n = [];
-    for (let i = 0; i < n; i++) upto_n.push(i+1);
+              const f = upOneChain.arguments[0];
+              const g = node.arguments[0];
 
-    upto_n
-      .map(n => Math.pow(n, 2))
-      .reduce((p, c) => p+c, 0)
-  })
-  .add('recursive call (from Wadler\'s deforestation paper)', function() {
-    function h (a, m, n) {
-      if (m > n) 
-        return a
-      else
-        return h (a + Math.pow(n, 2), m+1, n);
+              const a = upOneChain.arguments[1];
+              const b = node.arguments[2];
+
+              const fg = t.arrowFunctionExpression(
+                [ t.identifier('_') ],
+                t.callExpression(
+                  g,
+                  [t.callExpression(
+                    f,
+                    [t.identifier('_')]
+                  )]
+                )
+              )
+
+              const replacementTypedMap = t.callExpression(
+                t.memberExpression(
+                  upOneChain.callee.object,
+                  t.identifier('typedMap')
+                ),
+                [fg, a, b]
+              ) 
+
+              path.replaceWith(replacementTypedMap);
+
+              // node.arguments[0] = fg;
+              // node.arguments[2] = b;
+              // node.callee.object = node;
+              // upOneChain = null;
+              // path.remove();
+
+            }
+          }
+        }
+      }
     }
-    h(0, 1, n)
-  })
-  .add('simple for loop', function() {
-    let sum = 0;
-    for (let i = 0; i < n; i++) {
-      sum += Math.pow(i+1, 2);
-    }
-  })
-  .on('cycle', function(event) {
-    console.log(String(event.target));
-  })
-  .on('complete', function() {
-    console.log('Fastest is ' + this.filter('fastest').map('name'));
-  })
-  .run({ 'async': true });
+  };
+};

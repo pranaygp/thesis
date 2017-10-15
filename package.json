@@ -5,10 +5,16 @@
   "author": "Pranay Prakash <pranay.gp@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "benchmark": "node benchmark.js",
+    "test": "jest"
   },
   "dependencies": {
     "benchmark": "^2.1.4",
     "microtime": "^2.1.6"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-types": "^6.26.0",
+    "jest": "^21.2.1"
   }
 }
