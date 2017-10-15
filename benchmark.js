@@ -1,32 +1,53 @@
 const Benchmark = require('benchmark');
 
-let suite = new Benchmark.Suite;
+const simpleMapMapInput = require('./__tests__/strippedInputs/simple_map_map');
+const simpleMapMapOutput = require('./__tests__/outputs/simple_map_map');
 
-const n = 1000;
-
-suite
-  .add('sum (map square (upto 1 n))',  function() {
-    let upto_n = [];
-    for (let i = 0; i < n; i++) upto_n.push(i+1);
-
-    upto_n
-      .map(n => Math.pow(n, 2))
-      .reduce((p, c) => p+c, 0)
+const smallSuite = new Benchmark.Suite;
+smallSuite
+  .add('simple_map_map before',  function() {
+    simpleMapMapInput(10);
   })
-  .add('recursive call (from Wadler\'s deforestation paper)', function() {
-    function h (a, m, n) {
-      if (m > n) 
-        return a
-      else
-        return h (a + Math.pow(n, 2), m+1, n);
-    }
-    h(0, 1, n)
+  .add('simple_map_map after transform',  function() {
+    simpleMapMapOutput(10);
   })
-  .add('simple for loop', function() {
-    let sum = 0;
-    for (let i = 0; i < n; i++) {
-      sum += Math.pow(i+1, 2);
-    }
+  .on('cycle', function(event) {
+    console.log(String(event.target));
+  })
+  .on('complete', function() {
+    console.log('Fastest is ' + this.filter('fastest').map('name'));
+    console.log('\nStarting medium test suite (n = 200)');
+    startMedSuite();
+  })
+
+function startSmallSuite(){ smallSuite.run({ 'async': true }); }
+
+const medSuite = new Benchmark.Suite;
+medSuite
+  .add('simple_map_map before',  function() {
+    simpleMapMapInput(200);
+  })
+  .add('simple_map_map after transform',  function() {
+    simpleMapMapOutput(200);
+  })
+  .on('cycle', function(event) {
+    console.log(String(event.target));
+  })
+  .on('complete', function() {
+    console.log('Fastest is ' + this.filter('fastest').map('name'));
+    console.log('\nStarting large test suite (n = 1000)');
+    startLargeSuite();
+  })
+
+function startMedSuite(){ medSuite.run({ 'async': true }); }
+
+const largeSuite = new Benchmark.Suite;
+largeSuite
+  .add('simple_map_map before',  function() {
+    simpleMapMapInput(1000);
+  })
+  .add('simple_map_map after transform',  function() {
+    simpleMapMapOutput(1000);
   })
   .on('cycle', function(event) {
     console.log(String(event.target));
@@ -34,4 +55,8 @@ suite
   .on('complete', function() {
     console.log('Fastest is ' + this.filter('fastest').map('name'));
   })
-  .run({ 'async': true });
+
+function startLargeSuite(){ largeSuite.run({ 'async': true }); }
+
+console.log('Starting small test suite (n = 10)');
+startSmallSuite();

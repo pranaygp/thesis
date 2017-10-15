@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "benchmark": "node benchmark.js",
-    "build-tests": "babel __tests__/inputs -d __tests__/outputs && babel __tests__/inputs -d __tests__/strippedInputs --plugins ../../stripTypesPlugin",
+    "build-tests": "babel __tests__/inputs -d __tests__/outputs --plugins ../../ && babel __tests__/inputs -d __tests__/strippedInputs --plugins ../../stripTypesPlugin",
     "test": "npm run build-tests && jest"
   },
   "dependencies": {
@@ -26,8 +26,5 @@
       "/strippedInputs/",
       "/outputs/"
     ]
-  },
-  "babel": {
-    "plugins": ["./"]
   }
 }
