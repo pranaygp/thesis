@@ -8,19 +8,25 @@
 
 ```
 Starting benchmark test for simple_map_map.js
-simple_map_map.js before x 94,021 ops/sec ±0.92% (92 runs sampled)
-simple_map_map.js after x 106,378 ops/sec ±1.33% (87 runs sampled)
+Avg. memory usage before: 70440086 bytes
+simple_map_map.js before x 0.96 ops/sec ±2.06% (7 runs sampled)
+Avg. memory usage after: 76091840 bytes
+simple_map_map.js after x 1.39 ops/sec ±2.10% (8 runs sampled)
 Fastest is simple_map_map.js after
 
 Starting benchmark test for simple_map_map_map.js
-simple_map_map_map.js before x 71,129 ops/sec ±0.61% (93 runs sampled)
-simple_map_map_map.js after x 34,526 ops/sec ±1.16% (89 runs sampled)
-Fastest is simple_map_map_map.js before
+Avg. memory usage before: 93419741 bytes
+simple_map_map_map.js before x 0.77 ops/sec ±5.89% (6 runs sampled)
+Avg. memory usage after: 64506002 bytes
+simple_map_map_map.js after x 2.25 ops/sec ±2.03% (10 runs sampled)
+Fastest is simple_map_map_map.js after
 
 Starting benchmark test for wadler_map_reduce.js
-wadler_map_reduce.js before x 95,615 ops/sec ±0.89% (91 runs sampled)
-wadler_map_reduce.js after x 95,385 ops/sec ±0.84% (92 runs sampled)
-Fastest is wadler_map_reduce.js before,wadler_map_reduce.js after
+Avg. memory usage before: 66600393 bytes
+wadler_map_reduce.js before x 2.43 ops/sec ±5.19% (11 runs sampled)
+Avg. memory usage after: 32446848 bytes
+wadler_map_reduce.js after x 23.55 ops/sec ±0.92% (42 runs sampled)
+Fastest is wadler_map_reduce.js after
 ```
 
 # How to detect if a function is pure (or _referentially transparent_)[1]
