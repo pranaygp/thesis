@@ -47,12 +47,16 @@ We also need to store information on the purity of some functions (for instance,
 
 * In a non-lazy language, it is possible to convert a function that doens't terminate into one that does using Wadler's deforestation algorithm [2]
 
-# Things I'm reading
+# Reading list
 
 * [https://search.proquest.com/docview/303342238/](https://search.proquest.com/docview/303342238/)
 * [http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps](http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps)
 * [http://research.microsoft.com/en-us/um/people/simonpj/papers/deforestation-short-cut.pdf](http://research.microsoft.com/en-us/um/people/simonpj/papers/deforestation-short-cut.pdf)
 * [https://www.microsoft.com/en-us/research/wp-content/uploads/2001/09/rules.pdf](https://www.microsoft.com/en-us/research/wp-content/uploads/2001/09/rules.pdf)
+* [https://dl.acm.org/citation.cfm?doid=581478.581491](https://dl.acm.org/citation.cfm?doid=581478.581491)
+* [https://dl.acm.org/citation.cfm?doid=1328408.1328412](https://dl.acm.org/citation.cfm?doid=1328408.1328412)
+* [https://link.springer.com/chapter/10.1007%2F978-3-540-78969-7_13](https://link.springer.com/chapter/10.1007%2F978-3-540-78969-7_13)
+
 
 # References
 [1] [https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure](https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure)]
