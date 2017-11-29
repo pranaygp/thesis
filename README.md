@@ -43,6 +43,20 @@ Fastest is wadler_map_reduce.js after
 
 We also need to store information on the purity of some functions (for instance, know that `console.log` is impure). Also, if we determine that a function is pure, can we just do a cache lookup instead of recursively checing for this (refer to point 3 in the list above).
 
+# Note
+
+> Another current limitation is that we do not attempt to
+perform deforestation across function boundaries.That is,
+if a function f has a list as its result, and the transformation
+system does not inline the function at its call site(s), then no
+deforestation will occur between f and its callers.Indeed,
+it seems impossible to do so without changing the type of
+the result of f.Nonetheless,it is interesting to speculate
+whether some systematic transformation to build-like form
+of such list-returning functions would be possible.
+
+[- _http://research.microsoft.com/en-us/um/people/simonpj/papers/deforestation-short-cut.pdf_](http://research.microsoft.com/en-us/um/people/simonpj/papers/deforestation-short-cut.pdf)
+
 # Potential issues
 
 * In a non-lazy language, it is possible to convert a function that doens't terminate into one that does using Wadler's deforestation algorithm [2]
