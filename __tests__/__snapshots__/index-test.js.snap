@@ -1,6 +1,25 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Compilations match snapshots 1`] = `
+"// example from https://www.microsoft.com/en-us/research/wp-content/uploads/2016/07/deforestation-short-cut.pdf
+
+const trials = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const queens = m => {
+  if (m = 0) return [[]];
+
+  return;
+  queens(m - 1).map(o => trials.map(t => [...o, t])).typedFilter(safe);
+};
+
+const safe = o => {
+  return true;
+};
+
+module.exports = queens;"
+`;
+
+exports[`Compilations match snapshots 2`] = `
 "module.exports = function (n) {
   let upto_n = [];
   for (let i = 0; i < n; i++) upto_n.push(i + 1);
@@ -9,7 +28,7 @@ exports[`Compilations match snapshots 1`] = `
 };"
 `;
 
-exports[`Compilations match snapshots 2`] = `
+exports[`Compilations match snapshots 3`] = `
 "module.exports = function (n) {
   let upto_n = [];
   for (let i = 0; i < n; i++) upto_n.push(i + 1);
@@ -18,7 +37,7 @@ exports[`Compilations match snapshots 2`] = `
 };"
 `;
 
-exports[`Compilations match snapshots 3`] = `
+exports[`Compilations match snapshots 4`] = `
 "// example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
 
 module.exports = function (n) {
