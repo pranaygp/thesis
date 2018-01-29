@@ -18,6 +18,10 @@ const from = (a, b) => build((c, n) => {
   const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
   return from_(a, b)(c, n)
 })
+const upto = x => build((c, n) => {
+  const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
+  return from_(1, x)(c, n)
+})
 
 // consumers & producers
 const map = (f, xs) => build((c, n) => foldr((a, b) => c(f(a), b), n, xs))
@@ -25,6 +29,8 @@ const filter = (f, xs) => build((c, n) => foldr((a, b) => f(a) ? c(a, b): b, n, 
 const append = (xs, ys) => build((c, n) => foldr(c, foldr(c, n, ys), xs))
 const join = xs => build((c, n) => foldr((x, y) => foldr(c, y, x), n, xs))
 
+// consumers
+const sum = xs => foldr((a, b) => a+b, 0, xs)
 
 // playground
 let w = map(x => x*2, [1, 2, 3])

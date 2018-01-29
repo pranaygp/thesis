@@ -1,9 +1,8 @@
 // example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
+const { build, foldr } = require('../../core');
 
-module.exports = function (n) {
-  let upto_n = [];
-  for (let i = 0; i < n; i++) upto_n.push(i + 1);
+module.exports = n => ((_c, _n) => ((_c2, _n2) => {
+  const from_ = (_a3, _b3) => (_c3, _n3) => _a3 > _b3 ? _n3 : _c3(_a3, from_(_a3 + 1, _b3)(_c3, _n3));
 
-  return upto_n.typedMap(n => n * n, 'a', 'a') // [a] -> [a]   ( a -> a )
-  .typedReduce((p, c) => p + c, 0, 'a', 'a'); // [a] -> a     ( a -> a -> a, a )
-};
+  return from_(1, n)(_c2, _n2);
+})((_a2, _b2) => _c((m => m * m)(_a2), _b2), _n))((_a, _b) => _a + _b, 0);

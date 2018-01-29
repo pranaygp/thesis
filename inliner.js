@@ -51,6 +51,31 @@ module.exports = function () {
           }))
         }
 
+        // upto
+        if(node.callee.type === 'Identifier' && node.callee.name === 'upto') {
+          const x = node.arguments[0];
+          
+          // const upto = x => build((c, n) => {
+          //   const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
+          //   return from_(1, x)(c, n)
+          // })
+          const c = path.scope.generateUidIdentifier('c');
+          const n = path.scope.generateUidIdentifier('n');
+          const c_ = path.scope.generateUidIdentifier('c');
+          const n_ = path.scope.generateUidIdentifier('n');
+          const a_ = path.scope.generateUidIdentifier('a');
+          const b_ = path.scope.generateUidIdentifier('b');
+          const upto = template(`
+            build((c, n) => {
+              const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
+              return from_(1, x)(c, n)
+            })
+          `)
+          path.replaceWith(upto({
+            c, n, c_, n_, a_, b_, x
+          }))
+        }
+
         // join
         if(node.callee.type === 'Identifier' && node.callee.name === 'join') {
           const xs = node.arguments[0];
@@ -67,6 +92,22 @@ module.exports = function () {
             c, n, x, y, xs
           }))
         }
+
+        // sum
+        if(node.callee.type === 'Identifier' && node.callee.name === 'sum') {
+          const xs = node.arguments[0];
+          
+          // const sum = xs => foldr((a, b) => a+b, 0, xs)
+          const a = path.scope.generateUidIdentifier('a');
+          const b = path.scope.generateUidIdentifier('b');
+          const sum = template(`
+            foldr((a, b) => a+b, 0, xs)
+          `)
+          path.replaceWith(sum({
+            a, b, xs
+          }))
+        }
+
       },
     }
   };
