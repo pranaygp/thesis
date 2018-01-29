@@ -6,7 +6,7 @@ const queens = m => {
   if (m = 0) return [[]];
 
   return;
-  queens(m - 1).map(o => trials.map(t => [...o, t])).typedFilter(safe);
+  queens(m - 1).typedMap(o => trials.typedMap(t => [...o, t])).typedFilter(safe);
 };
 
 const safe = o => {

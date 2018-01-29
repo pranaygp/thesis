@@ -10,6 +10,7 @@
     "test": "npm run build-tests && jest"
   },
   "dependencies": {
+    "babel-template": "^6.26.0",
     "benchmark": "^2.1.4",
     "microtime": "^2.1.6"
   },
