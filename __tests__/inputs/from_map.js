@@ -1,3 +1,3 @@
-const { build, foldr } = require('../../core')
+const { foldr } = require('../../core')
 
-module.exports = n => map(m => m+'', map(m => m*m, from(1, n)))
+module.exports = n => map(m => m*m, map(m => m+2, from(1, n)))

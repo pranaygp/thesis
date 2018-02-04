@@ -1,3 +1,9 @@
+# How to run (@fschr)
+
+1. yarn run build-tests
+2. modify the node_tester.js file
+3. node node_tester.js
+
 # Rewrite rules
 
 - [x] "map/map"    -> forall f g xs. xs.map(f).map(g) = xs.map(_ => g(f(_)))

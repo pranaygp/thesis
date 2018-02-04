@@ -31,6 +31,7 @@ const join = xs => build((c, n) => foldr((x, y) => foldr(c, y, x), n, xs))
 
 // consumers
 const sum = xs => foldr((a, b) => a+b, 0, xs)
+const stringify = xs => xs.join('')
 
 // playground
 let w = map(x => x*2, [1, 2, 3])
@@ -56,13 +57,13 @@ console.log(xw(5, 2))
 // Just do a beta reduction
 
 // foldr k z xs ->
-(() => {
-  const acc = z;
-  for(const x of xs.reverse()) {
-    acc = k_p(x, acc);
+((k, z, xs) => {
+  let acc = z;
+  for(let i = xs.length-1; i>=0; i--){
+    acc = k(xs[i], acc);
   }
-  return acc1;
-})()
+  return acc;
+})
 
 
 // list to cons

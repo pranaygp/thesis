@@ -1,4 +1,4 @@
-const { build, foldr } = require('../../core')
+const { foldr } = require('../../core')
 
 module.exports = function(n) {
   let upto_n = [];

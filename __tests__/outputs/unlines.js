@@ -1,3 +1,19 @@
-const { build, foldr } = require('../../core');
+const { foldr, stringify } = require('../../core');
 
-module.exports = ls => build((_c, _n) => ((_c2, _n2) => foldr((_a, _b) => _c2((l => l + '\n')(_a), _b), _n2, ls))((_x, _y) => foldr(_c, _y, _x), _n));
+module.exports = ls => stringify(((() => {
+  let _acc = [];
+
+  for (let _i = ls.length - 1; _i >= 0; _i--) {
+    _acc = ((() => {
+      let _acc2 = _acc;
+
+      for (let _i2 = (ls[_i] + '\n').length - 1; _i2 >= 0; _i2--) {
+        _acc2 = ([((ls[_i]) => ls[_i] + '\n')(ls[_i])[_i2], ..._acc2]);
+      }
+
+      return _acc2;
+    }));
+  }
+
+  return _acc;
+})));
