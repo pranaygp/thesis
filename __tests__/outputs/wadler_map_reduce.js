@@ -1,6 +1,4 @@
 // example from http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps
-const { foldr } = require('../../core');
-
 module.exports = n => ((_c2, _n2) => {
   const from_ = (_a3, _b3) => (_c3, _n3) => _a3 > _b3 ? _n3 : _c3(_a3, from_(_a3 + 1, _b3)(_c3, _n3));
 

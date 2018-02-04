@@ -1,4 +1,4 @@
-const { foldr, stringify } = require('../../core');
+const { stringify } = require('../../core');
 
 module.exports = ls => stringify((() => {
   let _acc = [];

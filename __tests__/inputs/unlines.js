@@ -1,3 +1,3 @@
-const { foldr, stringify } = require('../../core')
+const { stringify } = require('../../core')
 
 module.exports = ls => stringify(join(map(l => l+'\n', ls)))
