@@ -23,6 +23,11 @@ const upto = x => build((c, n) => {
   return from_(1, x)(c, n)
 })
 
+// upto(n) |> map(x => x*x)  |> sum
+// foldr] [build foldr] [build 
+// [foldr build] [foldr build]
+
+
 // consumers & producers
 const map = (f, xs) => build((c, n) => foldr((a, b) => c(f(a), b), n, xs))
 const filter = (f, xs) => build((c, n) => foldr((a, b) => f(a) ? c(a, b): b, n, xs))
