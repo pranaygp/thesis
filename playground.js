@@ -64,14 +64,14 @@ console.log(xw(5, 2))
  // build func returns a foldr call
  // foldr has nil as 2nd arg and first arg is a func that returns a call to cons
  // cons call shares same second arg as foldr param
- ((k, z, xs) => {
+((k, z, xs) => {
   let acc = [];
   let l = xs;
   for(let i = xs.length-1; i>=0; i--){
     // let y = first arg in c with substitutions ([foldr param 1] -> l[i], [foldr param 2] -> acc)
-    acc.unshift(y)
+    acc.push(y)
   }
-  return acc;
+  return acc.reverse()
 })()
 
 // build f ->
