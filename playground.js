@@ -53,18 +53,34 @@ console.log(xw(5, 2))
  * Conversions
  */
 
+ // build foldr c ->
+ // We can remove the cons from this: build((_c, _n) => foldr((_a3, _b3) => _c({ val: _a3 * _a3 }.val + 1, _b3), _n, upto_n))
+ // qualifiers:
+ // build func returns a foldr call
+ // foldr has nil as 2nd arg and first arg is a func that returns a call to cons
+ // cons call shares same second arg as foldr param
+ ((k, z, xs) => {
+  let acc = [];
+  let l = xs;
+  for(let i = xs.length-1; i>=0; i--){
+    // let y = first arg in c with substitutions ([foldr param 1] -> l[i], [foldr param 2] -> acc)
+    acc.unshift(y)
+  }
+  return acc;
+})()
+
 // build f ->
 // Just do a beta reduction
 
 // foldr k z xs ->
 ((k, z, xs) => {
   let acc = z;
+  let l = xs;
   for(let i = xs.length-1; i>=0; i--){
-    acc = k(xs[i], acc);
+    acc = k(l[i], acc);
   }
   return acc;
-})
-
+})()
 
 // list to cons
 [1, 2, 3, 4] -> cons(1, cons(2, cons(3, cons(4, []))));

@@ -26,7 +26,7 @@ module.exports = function () {
           const paramMap = params.reduce((r, p, i) => { r[p.name] = args[i]; return r } , {});
           path.traverse(reducerVisitor(paramMap));
           
-          path.replaceWith(t.parenthesizedExpression(body));
+          path.replaceWith(body);
         }
       },
     }

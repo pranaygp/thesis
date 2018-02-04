@@ -30,29 +30,30 @@ module.exports = function () {
           const z = node.arguments[1];
           const xs = node.arguments[2];
 
-          console.log(k, z);
-
           // ((k, z, xs) => {
           //   let acc = z;
+          //   let l = xs;
           //   for(let i = xs.length-1; i>=0; i--){
-          //     acc = k(xs[i], acc);
+          //     acc = k(l[i], acc);
           //   }
           //   return acc;
-          // })
+          // })()
           const acc = path.scope.generateUidIdentifier('acc');
+          const l = path.scope.generateUidIdentifier('l');
           const i = path.scope.generateUidIdentifier('i');
           const foldr = template(`
             (() => {
               let acc = z;
-              for(let i = xs.length-1; i>=0; i--){
-                acc = k(xs[i], acc);
+              let l = xs;
+              for(let i = l.length-1; i>=0; i--){
+                acc = k(l[i], acc);
               }
               return acc;
-            })
+            })()
           `)
 
           path.replaceWith(foldr({
-            k, z, xs, acc, i
+            k, z, xs, acc, l, i
           }))
         }
       },
