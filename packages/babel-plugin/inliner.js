@@ -31,23 +31,21 @@ module.exports = function () {
           const b = node.arguments[1];
           
           // const from = (a, b) => build((c, n) => {
-          //   const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
-          //   return from_(a, b)(c, n)
+          //   const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
+          //   return from_(a, b)
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
-          const c_ = path.scope.generateUidIdentifier('c');
-          const n_ = path.scope.generateUidIdentifier('n');
           const a_ = path.scope.generateUidIdentifier('a');
           const b_ = path.scope.generateUidIdentifier('b');
           const from = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
-              return from_(a, b)(c, n)
+              const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
+              return from_(a, b)
             })
           `)
           path.replaceWith(from({
-            c, n, c_, n_, a_, b_, a, b
+            c, n, a_, b_, a, b
           }))
         }
 
@@ -56,25 +54,45 @@ module.exports = function () {
           const x = node.arguments[0];
           
           // const upto = x => build((c, n) => {
-          //   const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
-          //   return from_(1, x)(c, n)
+          //   const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
+          //   return from_(1, x)
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
-          const c_ = path.scope.generateUidIdentifier('c');
-          const n_ = path.scope.generateUidIdentifier('n');
           const a_ = path.scope.generateUidIdentifier('a');
           const b_ = path.scope.generateUidIdentifier('b');
           const upto = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => (c_, n_) => a_>b_ ? n_ : c_(a_, from_(a_+1, b_)(c_, n_))
-              return from_(1, x)(c, n)
+              const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
+              return from_(1, x)
             })
           `)
           path.replaceWith(upto({
-            c, n, c_, n_, a_, b_, x
+            c, n, a_, b_, x
           }))
         }
+
+        // TODO: repeat
+        // if(node.callee.type === 'Identifier' && node.callee.name === 'repeat') {
+        //   const x = node.arguments[0];
+          
+        //   // const repeat = x => build((c, n) => {
+        //   //   const r = c(x, r)
+        //   //   return r;
+        //   // })
+        //   const c = path.scope.generateUidIdentifier('c');
+        //   const n = path.scope.generateUidIdentifier('n');
+        //   const r = path.scope.generateUidIdentifier('r');
+        //   const upto = template(`
+        //     build((c, n) => {
+        //       const r = c(x, r)
+        //       return r;
+        //     })
+        //   `)
+        //   path.replaceWith(upto({
+        //     c, n, r, x
+        //   }))
+        // }
 
         // join
         if(node.callee.type === 'Identifier' && node.callee.name === 'join') {
@@ -105,6 +123,44 @@ module.exports = function () {
           `)
           path.replaceWith(sum({
             a, b, xs
+          }))
+        }
+
+        // take
+        if(node.callee.type === 'Identifier' && node.callee.name === 'take') {
+          const k = node.arguments[0];
+          const xs = node.arguments[1];
+          
+          // const take = (k, xs) => build((c, n) => foldr((x, y) => m => m ? c(x, y(m-1)) : n, n, xs)(k))
+          const c = path.scope.generateUidIdentifier('c');
+          const n = path.scope.generateUidIdentifier('n');
+          const x = path.scope.generateUidIdentifier('x');
+          const y = path.scope.generateUidIdentifier('y');
+          const m = path.scope.generateUidIdentifier('m');
+          const take = template(`
+            build((c, n) => foldr((x, y) => m => m ? c(x, y(m-1)) : n, () => n, xs)(k))
+          `)
+          path.replaceWith(take({
+            c, n, x, y, m, k, xs
+          }))
+        }
+
+        // drop
+        if(node.callee.type === 'Identifier' && node.callee.name === 'drop') {
+          const k = node.arguments[0];
+          const xs = node.arguments[1];
+          
+          // const drop = (k, xs) => build((c, n) => foldr((x, y) => m => m ? y(m-1) : c(x, y(m)), n, xs)(k))
+          const c = path.scope.generateUidIdentifier('c');
+          const n = path.scope.generateUidIdentifier('n');
+          const x = path.scope.generateUidIdentifier('x');
+          const y = path.scope.generateUidIdentifier('y');
+          const m = path.scope.generateUidIdentifier('m');
+          const take = template(`
+            build((c, n) => foldr((x, y) => m => m ? y(m-1) : c(x, y(m)), () => n, xs)(k))
+          `)
+          path.replaceWith(take({
+            c, n, x, y, m, k, xs
           }))
         }
 

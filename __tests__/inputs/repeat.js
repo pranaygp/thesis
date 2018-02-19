@@ -1,0 +1,1 @@
+module.exports = n => take(n, repeat(42))
