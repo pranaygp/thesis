@@ -1,1 +1,1 @@
-module.exports = n => map(m => m+'', map(m => m*m, take(6, from(1, n))))
+module.exports = n => take(6, from(1, n))
