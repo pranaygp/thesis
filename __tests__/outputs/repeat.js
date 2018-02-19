@@ -1,20 +1,14 @@
 module.exports = n => (() => {
-  let ret = (() => {
-    let _acc = () => null;
+  let ret = ((_c2, _n2) => {
+    const _r = _c2(42, _r);
 
-    const _l = repeat(42);
+    return _r;
+  })((_x, _y) => (_m) => _m ? ((_a, _b) => {
+    const fn = p => p(_a, _b);
 
-    for (let _i = _l.length - 1; _i >= 0; _i--) {
-      _acc = (_m) => _m ? ((_a, _b) => {
-        const fn = p => p(_a, _b);
-
-        fn._isCons = true;
-        return fn;
-      })(_l[_i], _acc(_m - 1)) : null;
-    }
-
-    return _acc;
-  })()(n);
+    fn._isCons = true;
+    return fn;
+  })(_x, _y(_m - 1)) : null, () => null)(n);
 
   if (ret._isCons) {
     const acc = [];

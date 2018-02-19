@@ -73,26 +73,26 @@ module.exports = function () {
         }
 
         // TODO: repeat
-        // if(node.callee.type === 'Identifier' && node.callee.name === 'repeat') {
-        //   const x = node.arguments[0];
+        if(node.callee.type === 'Identifier' && node.callee.name === 'repeat') {
+          const x = node.arguments[0];
           
-        //   // const repeat = x => build((c, n) => {
-        //   //   const r = c(x, r)
-        //   //   return r;
-        //   // })
-        //   const c = path.scope.generateUidIdentifier('c');
-        //   const n = path.scope.generateUidIdentifier('n');
-        //   const r = path.scope.generateUidIdentifier('r');
-        //   const upto = template(`
-        //     build((c, n) => {
-        //       const r = c(x, r)
-        //       return r;
-        //     })
-        //   `)
-        //   path.replaceWith(upto({
-        //     c, n, r, x
-        //   }))
-        // }
+          // const repeat = x => build((c, n) => {
+          //   const r = c(x, r)
+          //   return r;
+          // })
+          const c = path.scope.generateUidIdentifier('c');
+          const n = path.scope.generateUidIdentifier('n');
+          const r = path.scope.generateUidIdentifier('r');
+          const upto = template(`
+            build((c, n) => {
+              const r = c(x, r)
+              return r;
+            })
+          `)
+          path.replaceWith(upto({
+            c, n, r, x
+          }))
+        }
 
         // join
         if(node.callee.type === 'Identifier' && node.callee.name === 'join') {
@@ -156,14 +156,33 @@ module.exports = function () {
           const x = path.scope.generateUidIdentifier('x');
           const y = path.scope.generateUidIdentifier('y');
           const m = path.scope.generateUidIdentifier('m');
-          const take = template(`
+          const drop = template(`
             build((c, n) => foldr((x, y) => m => m ? y(m-1) : c(x, y(m)), () => n, xs)(k))
           `)
-          path.replaceWith(take({
+          path.replaceWith(drop({
             c, n, x, y, m, k, xs
           }))
         }
-
+        
+        // adjust
+        if(node.callee.type === 'Identifier' && node.callee.name === 'adjust') {
+          const f = node.arguments[0];
+          const i = node.arguments[1];
+          const xs = node.arguments[2];
+          
+          // const adjust = (f, i, xs) => build((c, n) => foldr((x, y) => m => m === 0 ? c(f(x), y(m-1)) : c(x, y(m-1)), () => n, xs)(i))
+          const c = path.scope.generateUidIdentifier('c');
+          const n = path.scope.generateUidIdentifier('n');
+          const x = path.scope.generateUidIdentifier('x');
+          const y = path.scope.generateUidIdentifier('y');
+          const m = path.scope.generateUidIdentifier('m');
+          const adjust = template(`
+            build((c, n) => foldr((x, y) => m => m === 0 ? c(f(x), y(m-1)) : c(x, y(m-1)), () => n, xs)(i))
+          `)
+          path.replaceWith(adjust({
+            c, n, x, y, m, f, i, xs
+          }))
+        }
       },
     }
   };
