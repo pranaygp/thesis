@@ -14,31 +14,30 @@ module.exports = function () {
           const a = path.scope.generateUidIdentifier('a');
           const b = path.scope.generateUidIdentifier('b');
           const cons = template(`
-            (a, b) => [a, ...b]
-          `)
-          // const p = path.scope.generateUidIdentifier('p');
-          // const cons = template(`
-          //   (a, b) => {
-          //     const fn = p => p(x, y);
-          //     fn.toString = function() {
-          //         var nested = !!arguments.length;
-          //         var output = (nested ? x : "(" + x) + " ";
-          //         output += y ? y.toString(true) : "";
-          //         if (!nested) {
-          //             output = output.substring(0, output.length - 1) + ")";
-          //         }
-          //         return output;
-          //     };
-          //     return fn;
-          //   }
-          // `)
-          const nil = t.arrayExpression([]);
-          // const nil = t.nullLiteral();
+            (a, b) => {
+              const fn = p => p(a, b);
+              fn._isCons = true;
+              return fn;
+            }
+          `);
+          const nil = t.nullLiteral();
 
-          path.replaceWith(t.callExpression(f, [
-            cons({a, b}).expression,
-            nil
-          ]))
+          const build = template(`
+            (() => {
+              let ret = f(c, n);
+              if(ret._isCons) {
+                const acc = [];
+                while(ret){
+                  acc.push(ret(x => x));
+                  ret = ret((_, y) => y);
+                }
+                return acc;
+              }
+              return ret;
+            })()
+          `);
+
+          path.replaceWith(build({f, c: cons({a, b}).expression, n: nil}))
         }
 
         // foldr
@@ -61,7 +60,7 @@ module.exports = function () {
           const foldr = template(`
             (() => {
               let acc = z;
-              let l = xs;
+              const l = xs;
               for(let i = l.length-1; i>=0; i--){
                 acc = k(l[i], acc);
               }
