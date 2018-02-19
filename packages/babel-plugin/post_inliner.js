@@ -16,7 +16,24 @@ module.exports = function () {
           const cons = template(`
             (a, b) => [a, ...b]
           `)
+          // const p = path.scope.generateUidIdentifier('p');
+          // const cons = template(`
+          //   (a, b) => {
+          //     const fn = p => p(x, y);
+          //     fn.toString = function() {
+          //         var nested = !!arguments.length;
+          //         var output = (nested ? x : "(" + x) + " ";
+          //         output += y ? y.toString(true) : "";
+          //         if (!nested) {
+          //             output = output.substring(0, output.length - 1) + ")";
+          //         }
+          //         return output;
+          //     };
+          //     return fn;
+          //   }
+          // `)
           const nil = t.arrayExpression([]);
+          // const nil = t.nullLiteral();
 
           path.replaceWith(t.callExpression(f, [
             cons({a, b}).expression,

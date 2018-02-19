@@ -82,3 +82,5 @@ of such list-returning functions would be possible.
 [1] [https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure](https://softwareengineering.stackexchange.com/questions/176761/compute-if-a-function-is-pure)]
 
 [2] [http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps](http://homepages.inf.ed.ac.uk/wadler/papers/deforest/deforest.ps)
+
+[3] [https://gist.github.com/buzzdecafe/5272249](https://gist.github.com/buzzdecafe/5272249)
