@@ -25,9 +25,10 @@ module.exports = function () {
           const build = template(`
             (() => {
               let ret = f(c, n);
-              if(ret._isCons) {
+              if(ret._isCons || ret._isNestedCons) {
                 const acc = [];
                 while(ret){
+                  if(ret._isNestedCons) { ret = ret(); };
                   acc.push(ret(x => x));
                   ret = ret((_, y) => y);
                 }

@@ -10,10 +10,15 @@ module.exports = n => (() => {
     return fn;
   })((_a6 + 2) * (_a6 + 2), _b2), null);
 
-  if (ret._isCons) {
+  if (ret._isCons || ret._isNestedCons) {
     const acc = [];
 
     while (ret) {
+      if (ret._isNestedCons) {
+        ret = ret();
+      }
+
+      ;
       acc.push(ret(x => x));
       ret = ret((_, y) => y);
     }
