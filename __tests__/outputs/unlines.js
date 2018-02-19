@@ -1,4 +1,4 @@
-const { stringify } = require('../../core');
+const { stringify } = require('../../packages/runtime/index');
 
 module.exports = ls => stringify((() => {
   let _acc = [];

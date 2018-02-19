@@ -1,3 +1,5 @@
+// TODO: this file needs to be updated to benchmark the new version of the library
+
 const Benchmark = require('benchmark');
 const chalk = require('chalk');
 const fs = require('fs');

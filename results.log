@@ -1,7 +1,0 @@
-yarn run v1.2.1
-$ node index.js
-sum (map square (upto 1 n)) x 19,835 ops/sec ±1.08% (86 runs sampled)
-recursive call (from Wadler's deforestation paper) x 52,945 ops/sec ±1.04% (86 runs sampled)
-simple for loop x 418,057 ops/sec ±1.86% (86 runs sampled)
-Fastest is simple for loop
-Done in 18.64s.
