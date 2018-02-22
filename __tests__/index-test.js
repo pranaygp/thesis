@@ -25,7 +25,7 @@ inputFiles.forEach(({name}) => {
   const output = require(outputFile);
 
   it(name + ' is functionally equivalent before and after compilation', () => {
-    expect(input(200)).toEqual(output(200));
+    expect(output(10)).toEqual(input(10));
   })
 })
 

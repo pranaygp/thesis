@@ -1,5 +1,8 @@
 {
   "plugins": [
     "./packages/babel-plugin"
+  ],
+  "ignore": [
+    "**/__tests__/index-test.js"
   ]
 }

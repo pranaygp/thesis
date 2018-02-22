@@ -31,21 +31,26 @@ module.exports = function () {
           const b = node.arguments[1];
           
           // const from = (a, b) => build((c, n) => {
-          //   const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
-          //   return from_(a, b)
+          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+          //   const fn = from_(a, b)
+          //   fn._isCons = true
+          //   return fn
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
           const a_ = path.scope.generateUidIdentifier('a');
           const b_ = path.scope.generateUidIdentifier('b');
+          const p = path.scope.generateUidIdentifier('p');
           const from = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
-              return from_(a, b)
+              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+              const fn = from_(a, b)
+              fn._isCons = true
+              return fn
             })
           `)
           path.replaceWith(from({
-            c, n, a_, b_, a, b
+            c, n, a_, b_, p, a, b,
           }))
         }
 
@@ -54,30 +59,36 @@ module.exports = function () {
           const x = node.arguments[0];
           
           // const upto = x => build((c, n) => {
-          //   const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
-          //   return from_(1, x)
+          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+          //   const fn = from_(1, x)
+          //   fn._isCons = true
+          //   return fn
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
           const a_ = path.scope.generateUidIdentifier('a');
           const b_ = path.scope.generateUidIdentifier('b');
+          const p = path.scope.generateUidIdentifier('p');
           const upto = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => a_>b_ ? n : c(a_, from_(a_+1, b_))
-              return from_(1, x)
+              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+              const fn = from_(1, x)
+              fn._isCons = true
+              return fn
             })
           `)
           path.replaceWith(upto({
-            c, n, a_, b_, x
+            c, n, a_, b_, p, x
           }))
         }
 
-        // TODO: repeat
+        // repeat
         if(node.callee.type === 'Identifier' && node.callee.name === 'repeat') {
           const x = node.arguments[0];
           
           // const repeat = x => build((c, n) => {
-          //   const r = p => c(x, r)(p)
+          //   const r = p => c(x, r)(p);
+          //   r._isCons = true;
           //   return r;
           // })
           const c = path.scope.generateUidIdentifier('c');
@@ -86,7 +97,8 @@ module.exports = function () {
           const p = path.scope.generateUidIdentifier('p');
           const repeat = template(`
             build((c, n) => {
-              const r = p => c(x, r)(p)
+              const r = p => c(x, r)(p);
+              r._isCons = true;
               return r;
             })
           `)

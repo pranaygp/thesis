@@ -4,6 +4,7 @@ module.exports = n => stringify((() => {
   let ret = ((_c5, _n5) => {
     const _r = (_p) => _c5(97, _r)(_p);
 
+    _r._isCons = true;
     return _r;
   })((_a2, _b2) => (_m) => _m ? (() => {
     let _acc = _b2(_m - 1);
