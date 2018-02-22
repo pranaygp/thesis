@@ -77,20 +77,21 @@ module.exports = function () {
           const x = node.arguments[0];
           
           // const repeat = x => build((c, n) => {
-          //   const closure = { repeat_(){ return c(x, (() => { const fn = this.repeat_.bind(closure); fn._isNestedCons = true; return fn;})()) } };
-          //   return closure.repeat_.call(closure);
+          //   const r = p => c(x, r)(p)
+          //   return r;
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
-          // const r = path.scope.generateUidIdentifier('r');
-          const upto = template(`
+          const r = path.scope.generateUidIdentifier('r');
+          const p = path.scope.generateUidIdentifier('p');
+          const repeat = template(`
             build((c, n) => {
-              const closure = { repeat_(){ return c(x, (() => { const fn = this.repeat_.bind(closure); fn._isNestedCons = true; return fn;})()) } };
-              return closure.repeat_.call(closure);
+              const r = p => c(x, r)(p)
+              return r;
             })
           `)
-          path.replaceWith(upto({
-            c, n, x
+          path.replaceWith(repeat({
+            c, n, r, p, x
           }))
         }
 

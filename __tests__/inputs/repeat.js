@@ -1,1 +1,1 @@
-module.exports = n => take(5, repeat(4))
+module.exports = n => take(n, repeat(42))
