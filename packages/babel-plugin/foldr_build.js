@@ -11,7 +11,7 @@ module.exports = function () {
           const k = node.arguments[0];
           const z = node.arguments[1];
           const xs = node.arguments[2];
-          
+
           // foldr...build
           if(xs.type === 'CallExpression' && xs.callee.type === 'Identifier' && xs.callee.name === 'build') {
             const g = xs.arguments[0];

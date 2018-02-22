@@ -7,7 +7,7 @@
   "scripts": {
     "benchmark": "node --expose-gc benchmark.js",
     "build-tests": "babel __tests__/inputs -d __tests__/outputs",
-    "test": "npm run build-tests && jest"
+    "test": "jest"
   },
   "dependencies": {
     "@babel/core": "^7.0.0-beta.38",

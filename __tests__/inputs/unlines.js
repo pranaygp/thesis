@@ -1,3 +1,3 @@
 const { stringify } = require('../../packages/runtime/index')
 
-module.exports = ls => stringify(join(map(l => l+'\n', ls)))
+module.exports = n => stringify(join(take(n, map(l => l+'\n', map(String.fromCharCode, repeat(97))))))
