@@ -1,0 +1,9 @@
+{
+  "name": "babel-plugin-deforest",
+  "version": "1.0.0",
+  "description": "The required babel plugin complement to the deforest functional programming package. Read more at https://github.com/pranaygp/deforest",
+  "main": "index.js",
+  "repository": "https://github.com/pranaygp/deforest",
+  "author": "Pranay Prakash <pranay.gp@gmail.com>",
+  "license": "MIT"
+}

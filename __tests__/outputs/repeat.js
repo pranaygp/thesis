@@ -1,3 +1,4 @@
+
 module.exports = n => (() => {
   let ret = ((_c2, _n2) => {
     const _r = (_p) => _c2(42, _r)(_p);

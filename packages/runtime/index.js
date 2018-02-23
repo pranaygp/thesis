@@ -1,33 +1,26 @@
-const _c = (a, b) => [a, ...b]
-const _n = []
+const functionNames = [
+  "map",
+  "sum",
+  "adjust",
+  "upto",
+  "take",
+  "repeat",
+  "drop",
+  "from",
+  "join"
+]
 
-// build and foldr
-const build = f => f(_c, _n)
-
-// const foldr = (k, z, xs) => xs.reduce((a, b) => k(b, a), z)
-// foldr k z xs ->
-// (() => {
-//   const acc = z;
-//   for(let i = xs.length-1; i>=0; i--){
-//     acc = k(x, acc);
-//   }
-//   return acc;
-// })()
-const foldr = (k, z, xs) => {
-  let acc = z;
-  for(let i = xs.length-1; i>=0; i--){
-    acc = k(xs[i], acc);
-  }
-  return acc;
+// Construct a map with dummy methods
+const functionMap = {
 }
+functionNames.forEach(name => {
+  functionMap[name] = () => {throw Error(`Function '${name}' from the 'deforest' library should not be called at runtime. Please set up babel-plugin-deforest to extract and optimize your code. Read more at https://github.com/pranaygp/deforest`)};
+})
 
 // Convert an array of chars to a string
 const stringify = xs => xs.join('')
 
 module.exports = {
-  _c,
-  _n,
-  build,
-  foldr,
-  stringify
+  stringify,
+  ...functionMap
 }

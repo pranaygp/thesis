@@ -1,0 +1,9 @@
+{
+  "name": "deforest",
+  "version": "1.0.0",
+  "description": "The runtime library for `deforest` that basically consists of noops and gets removed away by babel. Read more at https://github.com/pranaygp/deforest",
+  "main": "index.js",
+  "repository": "https://github.com/pranaygp/deforest",
+  "author": "Pranay Prakash <pranay.gp@gmail.com>",
+  "license": "MIT"
+}

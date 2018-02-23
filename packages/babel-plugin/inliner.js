@@ -4,6 +4,9 @@ const t = require("babel-types");
 module.exports = function () {
   return {
     visitor: {
+      VariableDeclaration(path){
+        path.traverse(deforestImportVisitor, { parent: path })
+      },
       CallExpression(path) {
         let {node} = path;
 
@@ -71,7 +74,7 @@ module.exports = function () {
           const p = path.scope.generateUidIdentifier('p');
           const upto = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})())(p)
               const fn = from_(1, x)
               fn._isCons = true
               return fn
@@ -200,3 +203,15 @@ module.exports = function () {
     }
   };
 };
+
+const deforestImportVisitor = {
+  CallExpression(path){
+    const {node} = path;
+    if(node.callee.type === 'Identifier' && node.callee.name === 'require') {
+      const dep = node.arguments[0];
+      if(dep.type === 'StringLiteral' && dep.value === 'deforest') { //TODO: don't harcode 'deforest' here
+        this.parent.remove();
+      }
+    }
+  }
+}

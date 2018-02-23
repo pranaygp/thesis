@@ -1,4 +1,4 @@
-const { stringify } = require('../../packages/runtime/index');
+
 
 module.exports = n => stringify((() => {
   let ret = ((_c5, _n5) => {

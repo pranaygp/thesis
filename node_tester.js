@@ -7,6 +7,7 @@
 // const test = require('./__tests__/outputs/adjust')
 // const test = require('./__tests__/outputs/wadler_map_reduce') // TODO: fix
 // const test = require('./__tests__/outputs/unlines')
-const test = require('./__tests__/outputs/from_take')
+const test = require('./__tests__/inputs/from_take')
+// const test = require('./__tests__/outputs/double_diamond.js')
 
-console.log(test(1e9))
+console.log(test(1e3))
