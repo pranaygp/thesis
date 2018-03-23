@@ -8,6 +8,17 @@ const path = require('path');
 const INPUTS_DIR = path.resolve(__dirname, 'inputs');
 const OUTPUTS_DIR = path.resolve(__dirname, 'outputs');
 
+function fetchFiles(dir) {
+  return fs
+          .readdirSync(dir)
+          .map(name => (
+            {
+              name,
+              content: fs.readFileSync(path.resolve(dir, name), 'utf8')
+            }
+          ))
+}
+
 const inputFiles = fetchFiles(INPUTS_DIR);
 
 // it('Compilations match snapshots', () => {
@@ -28,14 +39,3 @@ inputFiles.forEach(({name}) => {
     expect(output(10)).toEqual(input(10));
   })
 })
-
-function fetchFiles(dir) {
-  return fs
-          .readdirSync(dir)
-          .map(name => (
-            {
-              name,
-              content: fs.readFileSync(path.resolve(dir, name), 'utf8')
-            }
-          ))
-}

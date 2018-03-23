@@ -210,7 +210,23 @@ const deforestImportVisitor = {
     if(node.callee.type === 'Identifier' && node.callee.name === 'require') {
       const dep = node.arguments[0];
       if(dep.type === 'StringLiteral' && dep.value === 'deforest') { //TODO: don't harcode 'deforest' here
-        this.parent.remove();
+        let retain = false;
+        this.parent.node.declarations.forEach(declaration => {
+          if (declaration.id.type === 'ObjectPattern') {
+            declaration.id.properties.forEach((node, i) => {
+              // TODO: record node.key and node.value and create a mapping
+              // TODO: don't just hardcode stringify. need better solution for runtime function list
+              if(node.key.name !== 'stringify') {
+                delete declaration.id.properties[i]
+              } else {
+                retain = true;
+              }
+            })
+          }
+        })
+        if (!retain) {
+          this.parent.remove();
+        }
       }
     }
   }
