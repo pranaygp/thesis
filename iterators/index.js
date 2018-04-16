@@ -8,19 +8,6 @@ Array.prototype.toIter = function() {
     return it;
 }
 
-const toIterExample = () => {
-    let xs   = Array.from(new Array(10), (x, i) => i + 1);
-    let xsIt = xs.toIter();
-
-    while (true) {
-        let maybeVal = xsIt.next();
-        if (maybeVal.done) break;
-        console.log(maybeVal.value);
-    }
-}
-
-toIterExample()
-
 Iterator.prototype.map = function(f) {
     const it = new Iterator();
     it.next = () => {
@@ -54,6 +41,17 @@ Iterator.prototype.collect = function() {
     return ret;
 }
 
+const toIterExample = () => {
+    let xs   = Array.from(new Array(10), (x, i) => i + 1);
+    let xsIt = xs.toIter();
+
+    while (true) {
+        let maybeVal = xsIt.next();
+        if (maybeVal.done) break;
+        console.log(maybeVal.value);
+    }
+}
+
 const mapCollectExample = () => {
     let xs = Array.from(new Array(10), (x, i) => i + 1);
 
@@ -67,4 +65,4 @@ const mapCollectExample = () => {
         .collect();
 }
 
-mapCollectExample();
+module.exports.default = Iterator;
