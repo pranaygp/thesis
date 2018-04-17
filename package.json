@@ -6,7 +6,7 @@
   "license": "MIT",
   "scripts": {
     "benchmark": "node --expose-gc benchmark.js",
-    "build-tests": "babel __tests__/inputs -d __tests__/outputs",
+    "build": "babel __tests__/inputs -d __tests__/outputs",
     "test": "jest"
   },
   "dependencies": {
@@ -15,7 +15,8 @@
     "@babel/traverse": "^7.0.0-beta.39",
     "babel-template": "^6.26.0",
     "benchmark": "^2.1.4",
-    "microtime": "^2.1.6"
+    "microtime": "^2.1.6",
+    "mockery": "^2.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -26,6 +27,9 @@
     "ramda": "^0.25.0"
   },
   "jest": {
+    "transform": {
+      "^.+.js$": "./noop.transformer.js"
+    },
     "testPathIgnorePatterns": [
       "/node_modules/",
       "/inputs/",

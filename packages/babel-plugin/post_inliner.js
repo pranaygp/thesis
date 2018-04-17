@@ -16,20 +16,29 @@ module.exports = function () {
           const cons = template(`
             (a, b) => {
               const fn = p => p(a, b);
-              fn._isCons = true;
+              fn.__isCons = true;
               return fn;
             }
           `);
-          const nil = t.nullLiteral();
+          const nil = t.objectExpression([
+            t.objectProperty(
+              t.identifier('__isNil'),
+              t.booleanLiteral(true)
+            )
+          ])
 
           const build = template(`
             (() => {
               let ret = f(c, n);
-              if(ret._isCons) {
+              if(ret.__isCons) {
                 const acc = [];
-                while(ret){
-                  acc.push(ret(x => x));
-                  ret = ret((_, y) => y);
+                while(ret && ret.__isCons){
+                  const fst = ret(x => x);
+                  const snd = ret((_, y) => y);
+                  if(fst && !fst.__isNil) {
+                    acc.push(fst);
+                  }
+                  ret = snd;
                 }
                 return acc;
               }

@@ -34,9 +34,9 @@ module.exports = function () {
           const b = node.arguments[1];
           
           // const from = (a, b) => build((c, n) => {
-          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})() )(p)
           //   const fn = from_(a, b)
-          //   fn._isCons = true
+          //   fn.__isCons = true
           //   return fn
           // })
           const c = path.scope.generateUidIdentifier('c');
@@ -46,9 +46,9 @@ module.exports = function () {
           const p = path.scope.generateUidIdentifier('p');
           const from = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})() )(p)
               const fn = from_(a, b)
-              fn._isCons = true
+              fn.__isCons = true
               return fn
             })
           `)
@@ -62,9 +62,9 @@ module.exports = function () {
           const x = node.arguments[0];
           
           // const upto = x => build((c, n) => {
-          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})() )(p)
+          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})() )(p)
           //   const fn = from_(1, x)
-          //   fn._isCons = true
+          //   fn.__isCons = true
           //   return fn
           // })
           const c = path.scope.generateUidIdentifier('c');
@@ -74,9 +74,9 @@ module.exports = function () {
           const p = path.scope.generateUidIdentifier('p');
           const upto = template(`
             build((c, n) => {
-              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn._isCons = true; return _fn;})())(p)
+              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})())(p)
               const fn = from_(1, x)
-              fn._isCons = true
+              fn.__isCons = true
               return fn
             })
           `)
@@ -91,7 +91,7 @@ module.exports = function () {
           
           // const repeat = x => build((c, n) => {
           //   const r = p => c(x, r)(p);
-          //   r._isCons = true;
+          //   r.__isCons = true;
           //   return r;
           // })
           const c = path.scope.generateUidIdentifier('c');
@@ -101,7 +101,7 @@ module.exports = function () {
           const repeat = template(`
             build((c, n) => {
               const r = p => c(x, r)(p);
-              r._isCons = true;
+              r.__isCons = true;
               return r;
             })
           `)

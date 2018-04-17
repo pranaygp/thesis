@@ -1,22 +1,35 @@
 // TODO: this file needs to be updated to benchmark the new version of the library
 
-const Benchmark = require('benchmark');
-const chalk = require('chalk');
 const fs = require('fs');
 const path = require('path');
+const Benchmark = require('benchmark');
+const chalk = require('chalk');
+const mockery = require('mockery');
 
 const INPUTS_DIR = path.resolve(__dirname, '__tests__/inputs');
-const STRIPPED_INPUTS_DIR = path.resolve(__dirname, '__tests__/strippedInputs');
 const OUTPUTS_DIR = path.resolve(__dirname, '__tests__/outputs');
 
-const strippedInputFiles = fs.readdirSync(STRIPPED_INPUTS_DIR);
+const deforestMock = require('./__mocks__/deforest');
+mockery.registerMock('deforest', deforestMock);
 
-strippedInputFiles.forEach(fName => {
-  const inputFName = path.resolve(STRIPPED_INPUTS_DIR, fName);
+const inputFiles = fs.readdirSync(INPUTS_DIR);
+
+inputFiles.forEach(fName => {
+  const inputFName = path.resolve(INPUTS_DIR, fName);
   const outputFName = path.resolve(OUTPUTS_DIR, fName);
-  const input = require(inputFName);
-  const output = require(outputFName);
+  
+  mockery.registerAllowable(inputFName);
+  mockery.registerAllowable(outputFName);
 
+  mockery.enable({
+    useCleanCache: true
+  });
+  const input = require(inputFName);
+
+  // mockery.deregisterMock('deforest');
+  mockery.disable();
+  const output = require(outputFName);
+  
   let totalMemBefore = 0;
   let numBefore = 0;
   let totalMemAfter = 0;
@@ -25,17 +38,18 @@ strippedInputFiles.forEach(fName => {
   const suite = new Benchmark.Suite;
   suite
     .add(fName + ' before', () => {
-      gc();
+      // console.log(gc)
+      // gc();
       const baseMemUsage = process.memoryUsage();
-      input(1e6);
+      input(1e4);
       const memoryUsage = process.memoryUsage();
       totalMemBefore += memoryUsage.heapUsed - baseMemUsage.heapUsed;
       numBefore++;
     })
     .add(fName + ' after', () => {
-      gc();
+      // gc();
       const baseMemUsage = process.memoryUsage();
-      output(1e6);
+      output(1e4);
       const memoryUsage = process.memoryUsage();
       totalMemAfter += memoryUsage.heapUsed - baseMemUsage.heapUsed;
       numAfter++;
@@ -59,6 +73,7 @@ strippedInputFiles.forEach(fName => {
     })
     .on('complete', function() {
       console.log('Fastest is ' + chalk.green(this.filter('fastest').map('name')));
+      mockery.disable();
     })
 
   console.log('\nStarting benchmark test for ' + fName)

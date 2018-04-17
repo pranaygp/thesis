@@ -5,6 +5,8 @@ const fs = require('fs');
 const path = require('path');
 // const plugin = require('../packages/babel-plugin/');
 
+jest.mock('deforest');
+
 const INPUTS_DIR = path.resolve(__dirname, 'inputs');
 const OUTPUTS_DIR = path.resolve(__dirname, 'outputs');
 

@@ -1909,6 +1909,10 @@ minimist@~0.0.1:
   dependencies:
     minimist "0.0.8"
 
+mockery@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/mockery/-/mockery-2.1.0.tgz#5b0aef1ff564f0f8139445e165536c7909713470"
+
 ms@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ms/-/ms-2.0.0.tgz#5608aeadfc00be6c2901df5f9861788de0d597c8"

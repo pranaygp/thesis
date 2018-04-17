@@ -4,7 +4,7 @@ module.exports = n => stringify((() => {
   let ret = ((_c5, _n5) => {
     const _r = (_p) => _c5(97, _r)(_p);
 
-    _r._isCons = true;
+    _r.__isCons = true;
     return _r;
   })((_a2, _b2) => (_m) => _m ? (() => {
     let _acc = _b2(_m - 1);
@@ -15,20 +15,30 @@ module.exports = n => stringify((() => {
       _acc = ((_a3, _b3) => {
         const fn = p => p(_a3, _b3);
 
-        fn._isCons = true;
+        fn.__isCons = true;
         return fn;
       })(_l[_i], _acc);
     }
 
     return _acc;
-  })() : null, () => null)(n);
+  })() : {
+    __isNil: true
+  }, () => ({
+    __isNil: true
+  }))(n);
 
-  if (ret._isCons) {
+  if (ret.__isCons) {
     const acc = [];
 
-    while (ret) {
-      acc.push(ret(x => x));
-      ret = ret((_, y) => y);
+    while (ret && ret.__isCons) {
+      const fst = ret(x => x);
+      const snd = ret((_, y) => y);
+
+      if (fst && !fst.__isNil) {
+        acc.push(fst);
+      }
+
+      ret = snd;
     }
 
     return acc;
