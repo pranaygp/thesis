@@ -12,33 +12,24 @@ module.exports = function (n) {
 
       for (let _i = _l.length - 1; _i >= 0; _i--) {
         _acc = ((_a4, _b4) => {
-          const fn = p => p(_a4, _b4);
-
-          fn.__isCons = true;
-          return fn;
+          return p => p(_a4, _b4);
         })({ val: _l[_i] * _l[_i] }.val + 1, _acc);
       }
 
       return _acc;
     })();
 
-    if (ret.__isCons) {
-      const acc = [];
+    const fst = x => x;
 
-      while (ret && ret.__isCons) {
-        const fst = ret(x => x);
-        const snd = ret((_, y) => y);
+    const snd = (_, y) => y;
 
-        if (fst && !fst.__isNil) {
-          acc.push(fst);
-        }
+    const acc = [];
 
-        ret = snd;
-      }
-
-      return acc;
+    while (ret && !ret.__isNil) {
+      acc.push(ret(fst));
+      ret = ret(snd);
     }
 
-    return ret;
+    return acc;
   })();
 };

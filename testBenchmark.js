@@ -9,7 +9,7 @@ const b = []
 function reset(fn) {
   a.length = 0;
   b.length = 0;
-  for (let i = 0; i < 1e5; i++){
+  for (let i = 0; i < 1e6; i++){
     a.push(fn(i));
     b.push(fn(i));
   }
@@ -76,14 +76,18 @@ global.junk = 0
 
 suite = new Benchmark.Suite;
 suite
-  .add('before beta reduction', () => {
-    const add = (x, y) => x + y
-    const sub = (x, y) => add(x, -y)
-    global.junk += sub(2, 1)
+.add('before beta reduction', () => {
+  for(let i = 0; i < 1e5; i++) {
+      const add = (x, y) => x + y
+      const sub = (x, y) => add(x, -y)
+      global.junk += sub(2, 1)
+    }
   })
   .add('after beta reduction', () => {
-    const sub = (x, y) => x + (-y)
-    global.junk += sub(2, 1)
+    for(let i = 0; i < 1e5; i++) {
+      const sub = (x, y) => x + (-y)
+      global.junk += sub(2, 1)
+    }
   })
   .on('cycle', function(event) {
     console.log(String(event.target));

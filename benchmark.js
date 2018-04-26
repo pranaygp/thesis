@@ -12,7 +12,8 @@ const OUTPUTS_DIR = path.resolve(__dirname, '__tests__/outputs');
 const deforestMock = require('./__mocks__/deforest');
 mockery.registerMock('deforest', deforestMock);
 
-const inputFiles = fs.readdirSync(INPUTS_DIR);
+const args = process.argv.slice(2).map(a => a + '.js');
+const inputFiles = args.length ? args : fs.readdirSync(INPUTS_DIR);
 
 inputFiles.forEach(fName => {
   const inputFName = path.resolve(INPUTS_DIR, fName);
@@ -40,19 +41,19 @@ inputFiles.forEach(fName => {
     .add(fName + ' before', () => {
       // console.log(gc)
       // gc();
-      const baseMemUsage = process.memoryUsage();
-      input(1e4);
-      const memoryUsage = process.memoryUsage();
-      totalMemBefore += memoryUsage.heapUsed - baseMemUsage.heapUsed;
-      numBefore++;
+      // const baseMemUsage = process.memoryUsage();
+      input(1e3);
+      // const memoryUsage = process.memoryUsage();
+      // totalMemBefore += memoryUsage.heapUsed - baseMemUsage.heapUsed;
+      // numBefore++;
     })
     .add(fName + ' after', () => {
       // gc();
-      const baseMemUsage = process.memoryUsage();
-      output(1e4);
-      const memoryUsage = process.memoryUsage();
-      totalMemAfter += memoryUsage.heapUsed - baseMemUsage.heapUsed;
-      numAfter++;
+      // const baseMemUsage = process.memoryUsage();
+      output(1e3);
+      // const memoryUsage = process.memoryUsage();
+      // totalMemAfter += memoryUsage.heapUsed - baseMemUsage.heapUsed;
+      // numAfter++;
     })
     .on('cycle', function(event) {
       if (numBefore > 0) {

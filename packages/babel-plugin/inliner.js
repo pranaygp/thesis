@@ -21,7 +21,7 @@ module.exports = function () {
           const a = path.scope.generateUidIdentifier('a');
           const b = path.scope.generateUidIdentifier('b');
           const map = template(`
-            build((c, n) => foldr((a, b) => c(f(a), b), n, xs))
+            interrupt(build((c, n) => interrupt(foldr((a, b) => c(f(a), b), n, xs))))
           `)
           path.replaceWith(map({
             c, n, a, b, f, xs
@@ -33,11 +33,9 @@ module.exports = function () {
           const a = node.arguments[0];
           const b = node.arguments[1];
           
-          // const from = (a, b) => build((c, n) => {
-          //   const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})() )(p)
-          //   const fn = from_(a, b)
-          //   fn.__isCons = true
-          //   return fn
+          // build((c, n) => {
+          //   const from_ = (a_, b_) => a_>b_ ? n : c(a_, (() => from_(a_+1, b_))())
+          //   return from_(a, b)
           // })
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
@@ -45,12 +43,13 @@ module.exports = function () {
           const b_ = path.scope.generateUidIdentifier('b');
           const p = path.scope.generateUidIdentifier('p');
           const from = template(`
-            build((c, n) => {
-              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})() )(p)
-              const fn = from_(a, b)
-              fn.__isCons = true
-              return fn
-            })
+            interrupt(build((c, n) => {
+              let acc = n;
+              for(let i = b; i >= a; i--) {
+                acc = c(i, acc);
+              }
+              return acc
+            }))
           `)
           path.replaceWith(from({
             c, n, a_, b_, p, a, b,
@@ -67,18 +66,21 @@ module.exports = function () {
           //   fn.__isCons = true
           //   return fn
           // })
+          // const from_ = (a_, b_) => a_>b_ ? n : c(a_, (() => from_(a_+1, b_))())
+          // return from_(1, x)
           const c = path.scope.generateUidIdentifier('c');
           const n = path.scope.generateUidIdentifier('n');
           const a_ = path.scope.generateUidIdentifier('a');
           const b_ = path.scope.generateUidIdentifier('b');
           const p = path.scope.generateUidIdentifier('p');
           const upto = template(`
-            build((c, n) => {
-              const from_ = (a_, b_) => p => a_>b_ ? n : c(a_, (() => { const _fn = from_(a_+1, b_); _fn.__isCons = true; return _fn;})())(p)
-              const fn = from_(1, x)
-              fn.__isCons = true
-              return fn
-            })
+            interrupt(build((c, n) => {
+              let acc = n;
+              for(let i = x; i >= 1; i--) {
+                acc = c(i, acc);
+              }
+              return acc
+            }))
           `)
           path.replaceWith(upto({
             c, n, a_, b_, p, x
@@ -99,11 +101,7 @@ module.exports = function () {
           const r = path.scope.generateUidIdentifier('r');
           const p = path.scope.generateUidIdentifier('p');
           const repeat = template(`
-            build((c, n) => {
-              const r = p => c(x, r)(p);
-              r.__isCons = true;
-              return r;
-            })
+            interrupt(build((c, n) => r = p => c(x, r)(p)))
           `)
           path.replaceWith(repeat({
             c, n, r, p, x
@@ -120,7 +118,7 @@ module.exports = function () {
           const x = path.scope.generateUidIdentifier('x');
           const y = path.scope.generateUidIdentifier('y');
           const join = template(`
-            build((c, n) => foldr((x, y) => foldr(c, y, x), n, xs))
+            interrupt(build((c, n) => interrupt(foldr((x, y) => foldr(c, y, x), n, xs))))
           `)
           path.replaceWith(join({
             c, n, x, y, xs
@@ -154,7 +152,7 @@ module.exports = function () {
           const y = path.scope.generateUidIdentifier('y');
           const m = path.scope.generateUidIdentifier('m');
           const take = template(`
-            build((c, n) => foldr((x, y) => m => m ? c(x, y(m-1)) : n, () => n, xs)(k))
+            interrupt(build((c, n) => interrupt(foldr((x, y) => m => m ? c(x, y(m-1)) : n, () => n, xs))(k)))
           `)
           path.replaceWith(take({
             c, n, x, y, m, k, xs
@@ -173,7 +171,7 @@ module.exports = function () {
           const y = path.scope.generateUidIdentifier('y');
           const m = path.scope.generateUidIdentifier('m');
           const drop = template(`
-            build((c, n) => foldr((x, y) => m => m ? y(m-1) : c(x, y(m)), () => n, xs)(k))
+            interrupt(build((c, n) => interrupt(foldr((x, y) => m => m ? y(m-1) : c(x, y(m)), () => n, xs))(k)))
           `)
           path.replaceWith(drop({
             c, n, x, y, m, k, xs
@@ -193,7 +191,7 @@ module.exports = function () {
           const y = path.scope.generateUidIdentifier('y');
           const m = path.scope.generateUidIdentifier('m');
           const adjust = template(`
-            build((c, n) => foldr((x, y) => m => m === 0 ? c(f(x), y(m-1)) : c(x, y(m-1)), () => n, xs)(i))
+            interrupt(build((c, n) => interrupt(foldr((x, y) => m => m === 0 ? c(f(x), y(m-1)) : c(x, y(m-1)), () => n, xs))(i)))
           `)
           path.replaceWith(adjust({
             c, n, x, y, m, f, i, xs

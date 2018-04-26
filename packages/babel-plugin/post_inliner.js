@@ -15,9 +15,7 @@ module.exports = function () {
           const b = path.scope.generateUidIdentifier('b');
           const cons = template(`
             (a, b) => {
-              const fn = p => p(a, b);
-              fn.__isCons = true;
-              return fn;
+              return p => p(a, b);
             }
           `);
           const nil = t.objectExpression([
@@ -28,22 +26,7 @@ module.exports = function () {
           ])
 
           const build = template(`
-            (() => {
-              let ret = f(c, n);
-              if(ret.__isCons) {
-                const acc = [];
-                while(ret && ret.__isCons){
-                  const fst = ret(x => x);
-                  const snd = ret((_, y) => y);
-                  if(fst && !fst.__isNil) {
-                    acc.push(fst);
-                  }
-                  ret = snd;
-                }
-                return acc;
-              }
-              return ret;
-            })()
+            f(c, n)
           `);
 
           path.replaceWith(build({f, c: cons({a, b}).expression, n: nil}))
@@ -79,6 +62,45 @@ module.exports = function () {
 
           path.replaceWith(foldr({
             k, z, xs, acc, l, i
+          }))
+        }
+
+        // interrupt
+        if(node.callee.type === 'Identifier' && node.callee.name === 'interrupt') {
+          const arg = node.arguments[0];
+
+          // (() => {
+          //   let ret = arg;
+          //   if(ret.__isCons) {
+          //     const acc = [];
+          //     while(ret && ret.__isCons){
+          //       const fst = ret(x => x);
+          //       const snd = ret((_, y) => y);
+          //       if(fst && !fst.__isNil) {
+          //         acc.push(fst);
+          //       }
+          //       ret = snd;
+          //     }
+          //     return acc;
+          //   }
+          //   return ret;
+          // })()
+          const interrupt = template(`
+            (() => {
+              let ret = arg;
+              const fst = x => x;
+              const snd = (_, y) => y;
+              const acc = [];
+              while(ret && !ret.__isNil) {
+                acc.push(ret(fst));
+                ret = ret(snd);
+              }
+              return acc;
+            })()
+          `)
+
+          path.replaceWith(interrupt({
+            arg
           }))
         }
       },

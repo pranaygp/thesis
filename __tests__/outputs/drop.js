@@ -1,41 +1,29 @@
 
 module.exports = n => (() => {
   let ret = ((_c4, _n4) => {
-    const from_ = (_a3, _b3) => (_p) => _a3 > _b3 ? _n4 : _c4(_a3, (() => {
-      const _fn = from_(_a3 + 1, _b3);
+    let acc = _n4;
 
-      _fn.__isCons = true;
-      return _fn;
-    })())(_p);
+    for (let i = n; i >= 1; i--) {
+      acc = _c4(i, acc);
+    }
 
-    const fn = from_(1, n);
-    fn.__isCons = true;
-    return fn;
+    return acc;
   })((_x, _y) => (_m) => _m ? _y(_m - 1) : ((_a4, _b4) => {
-    const fn = p => p(_a4, _b4);
-
-    fn.__isCons = true;
-    return fn;
+    return p => p(_a4, _b4);
   })(_x * _x + '', _y(_m)), () => ({
     __isNil: true
   }))(n - 10);
 
-  if (ret.__isCons) {
-    const acc = [];
+  const fst = x => x;
 
-    while (ret && ret.__isCons) {
-      const fst = ret(x => x);
-      const snd = ret((_, y) => y);
+  const snd = (_, y) => y;
 
-      if (fst && !fst.__isNil) {
-        acc.push(fst);
-      }
+  const acc = [];
 
-      ret = snd;
-    }
-
-    return acc;
+  while (ret && !ret.__isNil) {
+    acc.push(ret(fst));
+    ret = ret(snd);
   }
 
-  return ret;
+  return acc;
 })();

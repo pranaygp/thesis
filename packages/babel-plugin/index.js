@@ -1,4 +1,5 @@
 const inliner = require('./inliner');
+const uninterrupt = require('./uninterrupt');
 const foldr_build = require('./foldr_build');
 const build_foldr = require('./build_foldr');
 const post_inliner = require('./post_inliner');
@@ -10,6 +11,7 @@ module.exports = function (babel) {
       Program: {
         enter(path) {
           path.traverse(inliner().visitor);
+          path.traverse(uninterrupt().visitor);
           path.traverse(foldr_build().visitor);
           // path.traverse(build_foldr().visitor);
           path.traverse(post_inliner().visitor);

@@ -37,7 +37,11 @@ inputFiles.forEach(({name}) => {
   const input = require(inputFile);
   const output = require(outputFile);
 
-  it(name + ' is functionally equivalent before and after compilation', () => {
+  it(name + ' hsas equivalent answers on n=10', () => {
     expect(output(10)).toEqual(input(10));
+  })
+
+  it(name + ' hsas equivalent answers on n=1e3', () => {
+    expect(output(1e3)).toEqual(input(1e3));
   })
 })
