@@ -1,0 +1,314 @@
+\documentclass[10pt, letterpapper]{proc}
+%\documentclass[12pt, letterpapper, titlepage]{article}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
+\usetikzlibrary{positioning}
+
+\usepackage{minted}
+%\usemintedstyle{emacs}
+%\usemintedstyle{borland}
+\usemintedstyle{friendly}
+
+\usepackage{subcaption}
+\usepackage{caption}
+
+\usepackage[nottoc,numbib]{tocbibind}
+\bibliographystyle{plain}
+
+\def\mintcode#1{\mbox{\mintinline{clojure}{#1}}}
+\def\code#1{\mbox{\texttt{#1}}}
+\def\parlet{\code{parlet}}
+\def\parexpr{\code{parexpr}}
+\def\defparfun{\code{defparfun}}
+
+\newminted{clojure}{fontsize=\footnotesize}
+
+\author{
+    Thomas Fischer and Pranay Prakash\\
+    \texttt{tdfisch2@illinois.edu, pranay@zeit.co}
+}
+
+\title{Deforestation in JavaScript}
+
+\begin{document}
+
+\maketitle
+
+% \tableofcontents
+% \pagebreak
+
+\section{Introduction}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\section{Related Work} \label{label:related_work}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\subsection{Other languages}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\section{Mostly Pure Functions} \label{label:mostly_pure}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\subsection{Dependencies}
+Hello, World!
+
+\begin{figure}[h]
+\centering
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\begin{minted}[fontsize=\small]{clojure}
+(parlet [a 1
+         b (+ 1 a)]
+  a)
+\end{minted}
+\caption{A parlet containing a dependency}
+\label{fig:parlet_dep}
+\end{figure}
+
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\subsection{Correctness}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\section{defparfun}
+\begin{figure*}[t!]
+\captionsetup[subfigure]{belowskip=20pt}
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [a]
+  (if (pred? ....)
+    (do ...)
+    (do ... (f (+ 1 a)))))
+\end{minted}
+\subcaption{Input code}
+\label{fig:moveit_a}
+\end{subfigure}%
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [a]
+  (if (pred? ....)
+    (do ...)
+    (do ... e1)))
+\end{minted}
+\subcaption{Replace call with new variable}
+\label{fig:moveit_b}
+\end{subfigure}%
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [a]
+  (if (pred? ....)
+    (do ...)
+    (let [e1 (f (+ 1 a))]
+      (do ... e1))))
+\end{minted}
+\subcaption{The \code{if} forces a \code{let}}
+\label{fig:moveit_c}
+\end{subfigure}
+\captionsetup[subfigure]{belowskip=2pt}
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [...]
+  (let [a ...]
+    (let [b ...]
+      (f (+ 1 a)))))
+\end{minted}
+\subcaption{Input code}
+\label{fig:moveit_d}
+\end{subfigure}%
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [...]
+  (let [a ...]
+    (let [b ...]
+      e1)))
+\end{minted}
+\subcaption{Introduce a new variable}
+\label{fig:moveit_e}
+\end{subfigure}%
+\begin{subfigure}[b]{0.33\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn f [...]
+  (let [a ...]
+    (let [e1 (f (+ 1 a))]
+      (let [b ...]
+        e1)))))
+\end{minted}
+\subcaption{The \code{let} which defines \code{a} forces a \code{let}}
+\label{fig:moveit_f}
+\end{subfigure}
+\caption{Moving a recursive function call}
+\label{fig:moveit}
+\end{figure*}
+
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\subsection{Implementation} \label{label:mpure_algo}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\begin{figure}[h]
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn fib [n]
+ ;; granularity check
+ (if (< n 35)
+  (if (or (= 0 n) (= 1 n))
+   1
+   (+ (fib (- n 1))
+      (fib (- n 2))))
+
+  ;; recursive case
+  (if (or (= 0 n) (= 1 n))
+   1
+   (parlet [expr17300 (fib (- n 1))
+            expr17301 (fib (- n 2))]
+    (+ expr17300 expr17301)))))
+\end{minted}
+\caption{Transformed Fibonacci function}
+\label{fig:parfun_result}
+\end{figure}
+
+\section{Benchmarking}
+
+\begin{figure*}[t!]
+\begin{subfigure}[b]{0.5\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defn fib [n]
+  (if (or (= 0 n) (= 1 n))
+    1
+    (+
+     (fib (- n 1))
+     (fib (- n 2)))))
+\end{minted}
+\subcaption{Serial Fibonacci function}
+\label{fig:fib_serial}
+\end{subfigure}%
+\begin{subfigure}[b]{0.5\textwidth}
+\RecustomVerbatimEnvironment{Verbatim}{BVerbatim}{}
+\centering
+\begin{minted}[fontsize=\small]{clojure}
+(defparfun fib [n] (< n 35)
+  (if (or (= 0 n) (= 1 n))
+    1
+    (+
+     (fib (- n 1))
+     (fib (- n 2)))))
+\end{minted}
+\subcaption{Fibonacci function with \defparfun{} added}
+\label{fig:fib_parfun}
+\end{subfigure}
+\caption{}
+\label{ref:fib_code}
+\end{figure*}
+
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\subsection{Fibonacci}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\section{Conclusions and Future Work}
+Lorem ipsum dolor sit amet, est te dicta tibique, in eripuit expetenda disputando cum. Sed vidit insolens evertitur ei, vix at indoctum incorrupte. Per no volumus suavitate reformidans, at mel falli consequat, ut eos justo iuvaret. Homero integre albucius pri in, cum tempor scriptorem at. An sit noluisse delectus contentiones, duo no erant inermis. At nam ullum eirmod ullamcorper, habeo latine euripidis ea vis.
+
+Te posse aliquando eum. Ne illum iudico contentiones sed, ut cum commune ancillae democritum. Qui ne electram similique pertinacia, option efficiantur ius an. An equidem noluisse maiestatis sit, usu ei mutat mandamus. Augue omittam contentiones per ut, falli delicatissimi ei his. Ei usu integre feugiat delectus. In salutatus rationibus vel.
+
+Delenit consequat eos an. Delenit fierent at eam. Eum vero libris probatus te. Ut aeque patrioque eos, eius quidam aliquando eum an.
+
+Vide meliore vim te, eam vide idque homero ne, cu utinam virtute eos. Has cu rebum nihil recteque, dicam atomorum petentium sea ad, ei ius melius periculis. Vidit veniam omittantur in duo, quidam nominati vix ei, ius delectus adipiscing at. Quodsi splendide persequeris ne duo, tota recteque facilisis eu pro, fuisset ponderum instructior ea ius. Rebum mucius interesset ea usu, cu ius probo apeirian, ut legere nusquam scribentur eos. Vim alienum vivendum tincidunt in, ex graeci doming antiopam vix, malis iriure delectus cu mea.
+
+Nonumy semper consectetuer eos ex, nec percipitur efficiendi ad. Brute labores vulputate id pro, id vix veniam everti verear, has in atqui tollit putent. Sea ad facete senserit neglegentur. An probo nulla putant usu. Usu vide mundi eu, elaboraret persequeris eum ad.
+
+\end{document}
